@@ -1,0 +1,99 @@
+{
+  "version": 2,
+  "projects": {
+    "passit-admin": {
+      "root": "apps/passit-admin",
+      "sourceRoot": "apps/passit-admin",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/next:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "root": "apps/passit-admin",
+            "outputPath": "dist/apps/passit-admin"
+          },
+          "configurations": {
+            "production": {}
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/next:server",
+          "options": {
+            "buildTarget": "passit-admin:build",
+            "dev": true
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "passit-admin:build:production",
+              "dev": false
+            }
+          }
+        },
+        "export": {
+          "executor": "@nrwl/next:export",
+          "options": {
+            "buildTarget": "passit-admin:build:production"
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/passit-admin"],
+          "options": {
+            "jestConfig": "apps/passit-admin/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/passit-admin/**/*.{ts,tsx,js,jsx}"]
+          }
+        }
+      }
+    },
+    "passit-admin-e2e": {
+      "root": "apps/passit-admin-e2e",
+      "sourceRoot": "apps/passit-admin-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/passit-admin-e2e/cypress.json",
+            "tsConfig": "apps/passit-admin-e2e/tsconfig.e2e.json",
+            "devServerTarget": "passit-admin:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "passit-admin:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/passit-admin-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/next"
+  },
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "babel": true
+      }
+    },
+    "@nrwl/next": {
+      "application": {
+        "style": "styled-components",
+        "linter": "eslint"
+      }
+    }
+  },
+  "defaultProject": "passit-admin"
+}
