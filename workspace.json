@@ -8,7 +8,9 @@
       "targets": {
         "build": {
           "executor": "@nrwl/next:build",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "root": "apps/passit-admin",
             "outputPath": "dist/apps/passit-admin"
@@ -38,7 +40,9 @@
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/passit-admin"],
+          "outputs": [
+            "coverage/apps/passit-admin"
+          ],
           "options": {
             "jestConfig": "apps/passit-admin/jest.config.js",
             "passWithNoTests": true
@@ -47,7 +51,9 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/passit-admin/**/*.{ts,tsx,js,jsx}"]
+            "lintFilePatterns": [
+              "apps/passit-admin/**/*.{ts,tsx,js,jsx}"
+            ]
           }
         }
       }
@@ -73,7 +79,67 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/passit-admin-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/passit-admin-e2e/**/*.{js,ts}"
+            ]
+          }
+        }
+      }
+    },
+    "passit-api": {
+      "root": "apps/passit-api",
+      "sourceRoot": "apps/passit-api/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/passit-api",
+            "main": "apps/passit-api/src/main.ts",
+            "tsConfig": "apps/passit-api/tsconfig.app.json",
+            "assets": [
+              "apps/passit-api/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/passit-api/src/environments/environment.ts",
+                  "with": "apps/passit-api/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "passit-api:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/passit-api/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/passit-api"
+          ],
+          "options": {
+            "jestConfig": "apps/passit-api/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }

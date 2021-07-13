@@ -36,6 +36,9 @@
     "passit-admin-e2e": {
       "tags": [],
       "implicitDependencies": ["passit-admin"]
+    },
+    "passit-api": {
+      "tags": []
     }
   }
 }
